@@ -6,6 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4986DA9F2D76613800D7014F /* FolderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986DA9C2D76613800D7014F /* FolderContentView.swift */; };
+		4986DAA02D76613800D7014F /* FolderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986DA952D76613800D7014F /* FolderModel.swift */; };
+		4986DAA12D76613800D7014F /* FlashcardPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986DA992D76613800D7014F /* FlashcardPreviewView.swift */; };
+		4986DAA22D76613800D7014F /* FlashcardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986DA942D76613800D7014F /* FlashcardModel.swift */; };
+		4986DAA32D76613800D7014F /* FolderEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986DA9D2D76613800D7014F /* FolderEditView.swift */; };
+		4986DAA42D76613800D7014F /* FlashcardRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986DA9A2D76613800D7014F /* FlashcardRowView.swift */; };
+		4986DAA52D76613800D7014F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986DA972D76613800D7014F /* ContentView.swift */; };
+		4986DAA62D76613800D7014F /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986DA922D76613800D7014F /* SubscriptionManager.swift */; };
+		4986DAA72D76613800D7014F /* FlashcardEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986DA982D76613800D7014F /* FlashcardEditView.swift */; };
+		4986DAA82D76613800D7014F /* FolderCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986DA9B2D76613800D7014F /* FolderCardView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		497E2E7A2D7656A60031D10E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +40,16 @@
 		497E2E672D7656A50031D10E /* Wordr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wordr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		497E2E792D7656A60031D10E /* WordrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WordrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		497E2E832D7656A60031D10E /* WordrUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WordrUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4986DA922D76613800D7014F /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
+		4986DA942D76613800D7014F /* FlashcardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardModel.swift; sourceTree = "<group>"; };
+		4986DA952D76613800D7014F /* FolderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderModel.swift; sourceTree = "<group>"; };
+		4986DA972D76613800D7014F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4986DA982D76613800D7014F /* FlashcardEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardEditView.swift; sourceTree = "<group>"; };
+		4986DA992D76613800D7014F /* FlashcardPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardPreviewView.swift; sourceTree = "<group>"; };
+		4986DA9A2D76613800D7014F /* FlashcardRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardRowView.swift; sourceTree = "<group>"; };
+		4986DA9B2D76613800D7014F /* FolderCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCardView.swift; sourceTree = "<group>"; };
+		4986DA9C2D76613800D7014F /* FolderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContentView.swift; sourceTree = "<group>"; };
+		4986DA9D2D76613800D7014F /* FolderEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderEditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +98,9 @@
 		497E2E5E2D7656A50031D10E = {
 			isa = PBXGroup;
 			children = (
+				4986DA9E2D76613800D7014F /* Views */,
+				4986DA962D76613800D7014F /* Models */,
+				4986DA932D76613800D7014F /* Managers */,
 				497E2E692D7656A50031D10E /* Wordr */,
 				497E2E7C2D7656A60031D10E /* WordrTests */,
 				497E2E862D7656A60031D10E /* WordrUITests */,
@@ -90,6 +116,37 @@
 				497E2E832D7656A60031D10E /* WordrUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4986DA932D76613800D7014F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				4986DA922D76613800D7014F /* SubscriptionManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		4986DA962D76613800D7014F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4986DA942D76613800D7014F /* FlashcardModel.swift */,
+				4986DA952D76613800D7014F /* FolderModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4986DA9E2D76613800D7014F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4986DA972D76613800D7014F /* ContentView.swift */,
+				4986DA982D76613800D7014F /* FlashcardEditView.swift */,
+				4986DA992D76613800D7014F /* FlashcardPreviewView.swift */,
+				4986DA9A2D76613800D7014F /* FlashcardRowView.swift */,
+				4986DA9B2D76613800D7014F /* FolderCardView.swift */,
+				4986DA9C2D76613800D7014F /* FolderContentView.swift */,
+				4986DA9D2D76613800D7014F /* FolderEditView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +293,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4986DA9F2D76613800D7014F /* FolderContentView.swift in Sources */,
+				4986DAA02D76613800D7014F /* FolderModel.swift in Sources */,
+				4986DAA12D76613800D7014F /* FlashcardPreviewView.swift in Sources */,
+				4986DAA22D76613800D7014F /* FlashcardModel.swift in Sources */,
+				4986DAA32D76613800D7014F /* FolderEditView.swift in Sources */,
+				4986DAA42D76613800D7014F /* FlashcardRowView.swift in Sources */,
+				4986DAA52D76613800D7014F /* ContentView.swift in Sources */,
+				4986DAA62D76613800D7014F /* SubscriptionManager.swift in Sources */,
+				4986DAA72D76613800D7014F /* FlashcardEditView.swift in Sources */,
+				4986DAA82D76613800D7014F /* FolderCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
