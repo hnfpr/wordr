@@ -3,7 +3,7 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var folders: [Folder]
+    @Query(sort: \Folder.title) private var folders: [Folder]  // Add sorting to ensure proper updates
     @StateObject private var subscriptionManager = SubscriptionManager()
     @State private var showingCreateSheet = false
     @State private var showingUpgradeAlert = false
@@ -14,25 +14,21 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 160))], spacing: 16) {
+                    // In ContentView, modify the navigation part:
                     ForEach(folders) { folder in
-                        FolderCardView(folder: folder)
-                            .onTapGesture {
-                                selectedFolder = folder
-                            }
-                            .onLongPressGesture {
+                        NavigationLink(value: folder) {
+                            FolderCardView(folder: folder)
+                        }
+                        .contextMenu {
+                            Button("Edit") {
                                 selectedFolder = folder
                                 showingEditSheet = true
                             }
-                            .contextMenu {
-                                Button("Edit") {
-                                    selectedFolder = folder
-                                    showingEditSheet = true
-                                }
-                                
-                                Button("Delete", role: .destructive) {
-                                    deleteFolder(folder)
-                                }
+                            
+                            Button("Delete", role: .destructive) {
+                                deleteFolder(folder)
                             }
+                        }
                     }
                 }
                 .padding()
@@ -67,9 +63,6 @@ struct ContentView: View {
             .navigationDestination(for: Folder.self) { folder in
                 FolderContentView(folder: folder)
             }
-            .navigationDestination(unwrapping: $selectedFolder) { $folder in
-                FolderContentView(folder: folder)
-            }
             .sheet(isPresented: $showingCreateSheet) {
                 FolderEditView(mode: .create) { title, description, imageData in
                     addFolder(title: title, description: description, imageData: imageData)
@@ -99,9 +92,17 @@ struct ContentView: View {
     }
     
     private func addFolder(title: String, description: String, imageData: Data?) {
-        let newFolder = Folder(title: title, desc: description, imageData: imageData)
-        modelContext.insert(newFolder)
-        try? modelContext.save()
+        withAnimation {
+            let newFolder = Folder(title: title, desc: description, imageData: imageData)
+            modelContext.insert(newFolder)
+            do {
+                try modelContext.save()
+                print("Folder saved successfully: \(title)")
+                print("Current folder count: \(folders.count)")
+            } catch {
+                print("Error saving folder: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func updateFolder(folder: Folder, title: String, description: String, imageData: Data?) {

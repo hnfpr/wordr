@@ -3,10 +3,22 @@ import SwiftData
 
 @main
 struct WordrApp: App {
+    let container: ModelContainer
+    
+    init() {
+        do {
+            container = try ModelContainer(for: Folder.self, Flashcard.self)
+        } catch {
+            fatalError("Could not initialize ModelContainer: \(error)")
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                ContentView()
+            }
         }
-        .modelContainer(for: [Folder.self, Flashcard.self])
+        .modelContainer(container)
     }
 }

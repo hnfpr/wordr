@@ -82,7 +82,7 @@ struct FolderEditView: View {
                         .lineLimit(3, reservesSpace: true)
                 }
             }
-            .navigationTitle(mode == .create ? "New Folder" : "Edit Folder")
+            .navigationTitle(FlashcardEditMode == .create ? "New Folder" : "Edit Folder")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

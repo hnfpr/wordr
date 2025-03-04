@@ -14,15 +14,18 @@ struct FlashcardPreviewView: View {
             
             VStack {
                 HStack {
-                    Spacer()
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title)
-                            .foregroundColor(.primary)
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .font(.title2)
+                            Text("Back")
+                        }
+                        .foregroundColor(.primary)
                     }
                     .padding()
+                    Spacer()
                 }
                 
                 Spacer()
@@ -48,46 +51,50 @@ struct FlashcardPreviewView: View {
                                 .fill(Color.white)
                                 .shadow(radius: 5)
                             
-                            VStack(spacing: 20) {
-                                if let imageData = flashcards[currentIndex].imageData, 
-                                   let uiImage = UIImage(data: imageData) {
-                                    Image(uiImage: uiImage)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 200)
-                                        .cornerRadius(8)
-                                }
-                                
-                                if showingAnswer {
-                                    Text(flashcards[currentIndex].desc)
-                                        .font(.body)
-                                        .multilineTextAlignment(.center)
-                                        .padding()
-                                } else {
-                                    Text(flashcards[currentIndex].title)
-                                        .font(.title2)
-                                        .fontWeight(.bold)
-                                        .multilineTextAlignment(.center)
-                                        .padding()
-                                }
-                                
-                                Button {
-                                    withAnimation {
-                                        showingAnswer.toggle()
+                            ScrollView {
+                                VStack(spacing: 20) {
+                                    if let imageData = flashcards[currentIndex].imageData, 
+                                       let uiImage = UIImage(data: imageData) {
+                                        Image(uiImage: uiImage)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(maxHeight: 200)
+                                            .cornerRadius(8)
                                     }
-                                } label: {
-                                    Text(showingAnswer ? "Show Question" : "Show Answer")
-                                        .foregroundColor(.white)
-                                        .padding(.horizontal, 20)
-                                        .padding(.vertical, 10)
-                                        .background(Color.primary)
-                                        .cornerRadius(8)
+                                    
+                                    if showingAnswer {
+                                        Text(flashcards[currentIndex].desc)
+                                            .font(.body)
+                                            .multilineTextAlignment(.leading)
+                                            .padding()
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    } else {
+                                        Text(flashcards[currentIndex].title)
+                                            .font(.title2)
+                                            .fontWeight(.bold)
+                                            .multilineTextAlignment(.center)
+                                            .padding()
+                                    }
+                                    
+                                    Button {
+                                        withAnimation {
+                                            showingAnswer.toggle()
+                                        }
+                                    } label: {
+                                        Text(showingAnswer ? "Show Question" : "Show Answer")
+                                            .foregroundColor(.white)
+                                            .padding(.horizontal, 20)
+                                            .padding(.vertical, 10)
+                                            .background(Color.primary)
+                                            .cornerRadius(8)
+                                    }
+                                    .padding(.bottom)
                                 }
-                                .padding(.bottom)
+                                .padding()
                             }
-                            .padding()
                         }
-                        .frame(width: 300, height: 400)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(.horizontal)
                         
                         Spacer()
                         
