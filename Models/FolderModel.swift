@@ -1,3 +1,5 @@
+//ContentView Need Fix UI Not Similar with Design
+
 import Foundation
 import SwiftData
 

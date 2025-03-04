@@ -1,3 +1,5 @@
+// Fixed bug for Folder Bug
+
 import SwiftUI
 import SwiftData
 
