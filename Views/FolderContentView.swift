@@ -1,19 +1,16 @@
-//ContentView Need Fix UI Not Similar with Design
+//ContentView Need Fix UI Not Similar with Design New
 
 import SwiftUI
 import SwiftData
 
 struct FolderContentView: View {
+    let folder: Folder
     @Environment(\.modelContext) private var modelContext
-    @Bindable var folder: Folder
-    
-    @State private var showingCreateSheet = false
     @State private var selectedFlashcard: Flashcard?
     @State private var showingEditSheet = false
-    @State private var showingPreviewMode = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             if folder.flashcards.isEmpty {
                 ContentUnavailableView {
                     Label("No Flashcards", systemImage: "rectangle.on.rectangle")
@@ -21,33 +18,72 @@ struct FolderContentView: View {
                     Text("Tap the + button to create your first flashcard.")
                 }
             } else {
-                List {
-                    ForEach(folder.flashcards) { flashcard in
-                        FlashcardRowView(flashcard: flashcard)
+                ScrollView {
+                    LazyVStack(spacing: 12) {
+                        ForEach(folder.flashcards) { flashcard in
+                            HStack(spacing: 12) {
+                                if let imageData = flashcard.imageData,
+                                   let uiImage = UIImage(data: imageData) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 80, height: 80)
+                                        .clipped()
+                                        .cornerRadius(8)
+                                } else {
+                                    Rectangle()
+                                        .fill(Color(.systemGray5))
+                                        .frame(width: 80, height: 80)
+                                        .cornerRadius(8)
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(flashcard.title)
+                                        .font(.headline)
+                                    Text(flashcard.desc)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                        .lineLimit(2)
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding(12)
+                            .background(Color.white)
+                            .cornerRadius(12)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color(.systemGray5), lineWidth: 1)
+                            )
                             .onTapGesture {
                                 selectedFlashcard = flashcard
                                 showingEditSheet = true
                             }
-                            .swipeActions {
-                                Button(role: .destructive) {
-                                    deleteFlashcard(flashcard)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+                        }
                     }
+                    .padding()
                 }
-                
-                if !folder.flashcards.isEmpty {
-                    Button("Preview Mode") {
-                        showingPreviewMode = true
+            }
+            
+            if !folder.flashcards.isEmpty {
+                Button(action: {
+                    showingPreviewMode = true
+                }) {
+                    HStack {
+                        Image(systemName: "play.fill")
+                        Text("Play")
                     }
-                    .buttonStyle(.bordered)
-                    .padding(.bottom)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.black)
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
                 }
+                .padding()
             }
         }
         .navigationTitle(folder.title)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
@@ -76,24 +112,20 @@ struct FolderContentView: View {
         .fullScreenCover(isPresented: $showingPreviewMode) {
             FlashcardPreviewView(flashcards: folder.flashcards)
         }
-    }
-    
-    private func addFlashcard(title: String, description: String, imageData: Data?) {
-        let newFlashcard = Flashcard(title: title, desc: description, imageData: imageData, folder: folder)
-        folder.flashcards.append(newFlashcard)
-        try? modelContext.save()
-    }
-    
-    private func updateFlashcard(flashcard: Flashcard, title: String, description: String, imageData: Data?) {
-        flashcard.title = title
-        flashcard.desc = description
-        flashcard.imageData = imageData
-        try? modelContext.save()
-    }
-    
-    private func deleteFlashcard(_ flashcard: Flashcard) {
-        folder.flashcards.removeAll { $0.id == flashcard.id }
-        modelContext.delete(flashcard)
-        try? modelContext.save()
+        .sheet(item: $selectedFlashcard) { flashcard in
+            FlashcardEditView(
+                mode: .edit(flashcard),
+                onSave: { title, description, imageData in
+                    flashcard.title = title
+                    flashcard.desc = description
+                    flashcard.imageData = imageData
+                    try? modelContext.save()
+                },
+                onDelete: {
+                    modelContext.delete(flashcard)
+                    try? modelContext.save()
+                }
+            )
+        }
     }
 }
